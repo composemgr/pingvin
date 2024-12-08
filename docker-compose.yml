@@ -1,0 +1,19 @@
+name: pingvin
+services:
+  app:
+    image: stonith404/pingvin-share:latest
+    container_name: pingvin-app
+    hostname: pingvin
+    restart: always
+    ports:
+      - 172.17.0.1:69092:3000
+    volumes:
+      - /var/lib/srv/$USER/docker/stonith404/pingvin-share/latest/rootfs/data/pingvin:/opt/app/backend/data
+      - /var/lib/srv/$USER/docker/stonith404/pingvin-share/latest/rootfs/data/images:/opt/app/frontend/public/img
+    networks:
+      - pingvin
+
+networks:
+  pingvin:
+    name: pingvin
+    external: false
