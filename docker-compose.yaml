@@ -1,0 +1,32 @@
+# nginx proxy address - http://172.17.0.1:69092
+
+
+x-logging: &default-logging
+  options:
+    max-size: '5m'
+    max-file: '1'
+  driver: json-file
+
+name: pingvin
+services:
+  app:
+    image: stonith404/pingvin-share:latest
+    container_name: pingvin-app
+    hostname: ${BASE_HOST_NAME:-$HOSTNAME}
+    restart: always
+    pull_policy: always
+    logging: *default-logging
+    environment:
+      TZ: ${TZ:-America/New_York}
+    volumes:
+      - './rootfs/data/pingvin:/opt/app/backend/data'
+      - './rootfs/data/images:/opt/app/frontend/public/img'
+    ports:
+      - 172.17.0.1:69092:3000
+    networks:
+      - pingvin
+
+networks:
+  pingvin:
+    name: pingvin
+    external: false
