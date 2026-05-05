@@ -19,8 +19,8 @@ services:
     environment:
       TZ: ${TZ:-America/New_York}
     volumes:
-      - './rootfs/data/pingvin:/opt/app/backend/data'
-      - './rootfs/data/images:/opt/app/frontend/public/img'
+      - './volumes/data/pingvin:/opt/app/backend/data'
+      - './volumes/data/images:/opt/app/frontend/public/img'
     ports:
       - 172.17.0.1:69092:3000
     networks:
