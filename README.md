@@ -45,8 +45,8 @@ See `docker-compose.yaml` for complete list of configurable options.
 
 ## 📂 Volumes
 
-- `./rootfs/data/pingvin` - Data storage
-- `./rootfs/data/images` - Data storage
+- `./volumes/data/pingvin` - Data storage
+- `./volumes/data/images` - Data storage
 
 ## 🔍 Logging
 
