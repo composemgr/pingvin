@@ -18,8 +18,6 @@ services:
     logging: *default-logging
     environment:
       TZ: ${TZ:-America/New_York}
-      PUID: ${SERVICE_USER:-1000}
-      PGID: ${SERVICE_GROUP:-1000}
       CONTAINER_NAME: pingvin-app
       HOSTNAME: ${BASE_HOST_NAME:-$HOSTNAME}
     volumes:
