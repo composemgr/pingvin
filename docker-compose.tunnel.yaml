@@ -1,0 +1,36 @@
+name: pingvin
+x-logging: &default-logging
+  options:
+    max-size: '5m'
+    max-file: '1'
+  driver: json-file
+
+services:
+  app:
+    image: stonith404/pingvin-share:latest
+    container_name: pingvin-app
+    hostname: ${BASE_HOST_NAME:-$HOSTNAME}
+    restart: always
+    pull_policy: always
+    logging: *default-logging
+    environment:
+      TZ: ${TZ:-America/New_York}
+      CONTAINER_NAME: pingvin-app
+      HOSTNAME: ${BASE_HOST_NAME:-$HOSTNAME}
+    volumes:
+      - './volumes/data/pingvin:/opt/app/backend/data'
+      - './volumes/data/pingvin-images:/opt/app/frontend/public/img'
+    labels:
+      - 'cloudflare.enable=true'
+      - 'cloudflare.service=http://pingvin-app:3000'
+      - 'cloudflare.hostname=${BASE_HOST_NAME:-$HOSTNAME}'
+    networks:
+      - pingvin
+      - cloudflare
+
+networks:
+  pingvin:
+    name: pingvin
+    external: false
+  cloudflare:
+    external: true
