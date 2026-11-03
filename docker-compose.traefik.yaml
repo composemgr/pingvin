@@ -17,6 +17,12 @@ services:
       TZ: ${TZ:-America/New_York}
       CONTAINER_NAME: pingvin-app
       HOSTNAME: ${BASE_HOST_NAME:-$HOSTNAME}
+    healthcheck:
+      test: ['CMD-SHELL', '/bin/sh -c ''(if [[ "$$CADDY_DISABLED" = "true" ]]; then curl -fs http://localhost:$${BACKEND_PORT:-8080}/api/health; else curl -fs http://localhost:3000/api/health; fi) || exit 1''']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     volumes:
       - './volumes/data/pingvin:/opt/app/backend/data'
       - './volumes/data/pingvin-images:/opt/app/frontend/public/img'
